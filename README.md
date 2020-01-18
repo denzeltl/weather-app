@@ -1,6 +1,6 @@
 # Weather App
 
-A simple weather app that displays the time, date, and temperature of a city using the api of [openweathermap.org](openweathermap.org).
+A simple weather app that displays the time, date, and temperature of a city using the api of [openweathermap.org](https://openweathermap.org).
 
 View [here](https://denzeltl.github.io/weather-app/)
 

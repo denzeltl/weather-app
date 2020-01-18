@@ -15,7 +15,7 @@ body {
 }
 
 .main {
-  height: 100vh;
+  min-height: 100vh;
   background: -webkit-gradient(linear, left bottom, right top, from(#0d1e4b), to(#1f95b5));
   background: linear-gradient(to right top, #0d1e4b 0%, #1f95b5 100%);
   display: -webkit-box;
@@ -34,10 +34,10 @@ body {
 }
 
 .search-box {
-  border-radius: 0.3rem;
+  border-radius: 0.5rem;
   padding: 1rem 1.4rem;
   background: rgba(255, 255, 255, 0.6);
-  border: 0;
+  border: 1px solid rgba(255, 255, 255, 0);
   color: #252525;
   font-size: 1.5rem;
   outline: none;
@@ -48,6 +48,7 @@ body {
 .search-box:focus {
   border: 0;
   background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0);
 }
 
 .top {
@@ -121,6 +122,6 @@ body {
 
 .bottom__degrees__unit {
   font-size: 2rem;
-  margin-left: 0.8rem;
+  margin-left: 0.5rem;
 }
 /*# sourceMappingURL=style.css.map */
