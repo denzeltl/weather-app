@@ -14,7 +14,7 @@ body {
 }
 
 .main {
-    height: 100vh;
+    min-height: 100vh;
     background: linear-gradient(to right top, rgba(13, 30, 75, 1) 0%, rgba(31, 149, 181, 1) 100%);
     display: flex;
     align-items: center;
