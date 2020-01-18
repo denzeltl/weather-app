@@ -1,6 +1,6 @@
 const api = {
     key: "3d765551692710a23e1e7084bc48747a",
-    base: "https:/api.openweathermap.org/data/2.5/"
+    base: "https://api.openweathermap.org/data/2.5/"
 };
 const searchBox = document.querySelector(".search-box");
 
@@ -46,3 +46,5 @@ function searchError() {
     searchBox.style.color = "#f81d1d";
     searchBox.style.borderColor = "#f81d1d";
 }
+
+// TODO: time, date, icon, bg, location access, readme, animation?;
