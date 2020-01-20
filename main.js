@@ -13,6 +13,29 @@ searchBox.addEventListener("click", resetSearchBox);
 searchBox.addEventListener("keypress", enterKey);
 searchBox.addEventListener("blur", searchCity);
 
+// Pad a 0 if digit is less than 10
+function setZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+// Start time
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    // add a zero in front of numbers<10
+    m = setZero(m);
+    s = setZero(s);
+    document.querySelector(".top__time").innerHTML = h + ":" + m + ":" + s;
+    t = setTimeout(function() {
+        startTime();
+    }, 500);
+}
+
 // Get lat long if location access is granted
 function grantLocationAccess() {
     if (navigator.geolocation) {
@@ -76,6 +99,8 @@ function displayResults(weather) {
 
     const degree = document.querySelector(".bottom__degrees__value");
     degree.textContent = Math.round(weather.main.temp);
+
+    startTime();
     console.log(weather);
 }
 
