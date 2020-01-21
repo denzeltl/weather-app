@@ -6,6 +6,7 @@ const coords = {
     lat: 0,
     long: 0
 };
+let timeout;
 const searchBox = document.querySelector(".search-box");
 
 window.addEventListener("load", grantLocationAccess);
@@ -13,27 +14,111 @@ searchBox.addEventListener("click", resetSearchBox);
 searchBox.addEventListener("keypress", enterKey);
 searchBox.addEventListener("blur", searchCity);
 
-// Pad a 0 if digit is less than 10
-function setZero(i) {
-    if (i < 10) {
-        i = "0" + i;
+// Start time
+function startTime(timezone) {
+    let utc = Date.now() - 28800000;
+    const tz = timezone * 1000;
+    let date = new Date(utc + tz);
+
+    let h = date.getHours(); // 0 - 23
+    let m = date.getMinutes(); // 0 - 59
+    let s = date.getSeconds(); // 0 - 59
+    let session = "AM";
+
+    if (h == 0) {
+        h = 12;
     }
-    return i;
+
+    if (h > 12) {
+        h = h - 12;
+        session = "PM";
+    }
+
+    h = h < 10 ? "0" + h : h;
+    m = m < 10 ? "0" + m : m;
+    s = s < 10 ? "0" + s : s;
+
+    let time = h + ":" + m + ":" + s + " " + session;
+    document.querySelector(".top__time").textContent = time;
+
+    timeout = setTimeout(function() {
+        startTime(timezone);
+    }, 1000);
 }
 
-// Start time
-function startTime() {
-    var today = new Date();
-    var h = today.getHours();
-    var m = today.getMinutes();
-    var s = today.getSeconds();
-    // add a zero in front of numbers<10
-    m = setZero(m);
-    s = setZero(s);
-    document.querySelector(".top__time").innerHTML = h + ":" + m + ":" + s;
-    t = setTimeout(function() {
-        startTime();
-    }, 500);
+// Set date
+function setDate(timezone) {
+    let utc = Date.now() - 28800000;
+    const tz = timezone * 1000;
+    let date = new Date(utc + tz);
+
+    let day = date.getDay();
+    let d = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    switch (day) {
+        case 0:
+            day = "Sunday";
+            break;
+        case 1:
+            day = "Monday";
+            break;
+        case 2:
+            day = "Tuesday";
+            break;
+        case 3:
+            day = "Wednesday";
+            break;
+        case 4:
+            day = "Thursday";
+            break;
+        case 5:
+            day = "Friday";
+            break;
+        case 6:
+            day = "Saturday";
+    }
+
+    switch (month) {
+        case 1:
+            month = "January";
+            break;
+        case 2:
+            month = "February";
+            break;
+        case 3:
+            month = "March";
+            break;
+        case 4:
+            month = "April";
+            break;
+        case 5:
+            month = "May";
+            break;
+        case 6:
+            month = "June";
+            break;
+        case 7:
+            month = "July";
+            break;
+        case 8:
+            month = "August";
+            break;
+        case 9:
+            month = "September";
+            break;
+        case 10:
+            month = "October";
+            break;
+        case 11:
+            month = "November";
+            break;
+        case 12:
+            month = "December";
+    }
+
+    document.querySelector(".date").textContent = `${day}, ${d} ${month} ${year}`;
 }
 
 // Get lat long if location access is granted
@@ -100,8 +185,12 @@ function displayResults(weather) {
     const degree = document.querySelector(".bottom__degrees__value");
     degree.textContent = Math.round(weather.main.temp);
 
-    startTime();
+    clearTimeout(timeout);
+    startTime(weather.timezone);
+
+    setDate(weather.timezone);
+
     console.log(weather);
 }
 
-// TODO: time, date, icon, bg, readme, animation?;
+// TODO: icon, bg, readme, animation?;
