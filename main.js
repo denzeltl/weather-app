@@ -193,4 +193,4 @@ function displayResults(weather) {
     console.log(weather);
 }
 
-// TODO: icon, bg, readme, animation?;
+// TODO: icon, bg, readme, responsive, animation?;
