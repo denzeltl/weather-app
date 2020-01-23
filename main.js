@@ -167,6 +167,48 @@ function giveLatLong(lat, long) {
         .catch(searchError);
 }
 
+// Set icon
+function playSkycons(icon, weather, timezone) {
+    let utc = Date.now() - 28800000;
+    const tz = timezone * 1000;
+    let date = new Date(utc + tz);
+    const skycons = new Skycons({ color: "white" });
+    switch (true) {
+        case weather === "Clouds":
+            weather = "CLOUDY";
+            break;
+        case weather === "Thunderstorm":
+            weather = "THUNDER_RAIN";
+            break;
+        case weather === "Drizzle":
+            weather = "SLEET";
+            break;
+        case weather === "Rain":
+            weather = "RAIN";
+            break;
+        case weather === "Snow":
+            weather = "SNOW";
+            break;
+        case weather === "Atmosphere":
+            weather = "FOG";
+            break;
+        case weather === "Clear" && date.getHours() >= 6 && date.getHours() < 18:
+            weather = "CLEAR_DAY";
+            break;
+        case weather === "Clear" && date.getHours() >= 18:
+            weather = "CLEAR_NIGHT";
+            break;
+        case weather === "Clear" && date.getHours() < 6:
+            weather = "CLEAR_NIGHT";
+            break;
+        default:
+            weather = "FOG";
+    }
+
+    skycons.add(icon, Skycons[weather]);
+    skycons.play();
+}
+
 // Error getting api
 function searchError() {
     searchBox.value = "Sorry, city not found";
@@ -190,7 +232,10 @@ function displayResults(weather) {
 
     setDate(weather.timezone);
 
+    const icon = document.querySelector(".bottom__icon-desc__icon");
+    playSkycons(icon, weather.weather[0].main, weather.timezone);
+
     console.log(weather);
 }
 
-// TODO: icon, bg, readme, responsive, animation?;
+// TODO: clear icon for day/night, bg, readme, responsive, animation?;
