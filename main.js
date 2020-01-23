@@ -238,4 +238,4 @@ function displayResults(weather) {
     console.log(weather);
 }
 
-// TODO: clear icon for day/night, bg, readme, responsive, animation?;
+// TODO: bg, readme, responsive, animation?;
