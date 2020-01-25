@@ -189,24 +189,53 @@ function playSkycons(icon, weather, timezone) {
         case weather === "Snow":
             weather = "SNOW";
             break;
-        case weather === "Atmosphere":
-            weather = "FOG";
-            break;
         case weather === "Clear" && date.getHours() >= 6 && date.getHours() < 18:
             weather = "CLEAR_DAY";
             break;
-        case weather === "Clear" && date.getHours() >= 18:
-            weather = "CLEAR_NIGHT";
-            break;
-        case weather === "Clear" && date.getHours() < 6:
+        case weather === "Clear" && (date.getHours() >= 18 || date.getHours() < 6):
             weather = "CLEAR_NIGHT";
             break;
         default:
             weather = "FOG";
     }
-
     skycons.add(icon, Skycons[weather]);
     skycons.play();
+}
+
+// Set bg
+function setBg(weather, timezone) {
+    let utc = Date.now() - 28800000;
+    const tz = timezone * 1000;
+    let date = new Date(utc + tz);
+    const main = document.querySelector(".main");
+    switch (true) {
+        case weather === "Clouds" && date.getHours() >= 6 && date.getHours() < 18:
+            main.style.background = "linear-gradient(to right top, rgba(65, 89, 94, 1) 0%, rgba(59, 214, 255, 1) 100%)";
+            break;
+        case weather === "Clouds" && (date.getHours() >= 18 || date.getHours() < 6):
+            main.style.background = "linear-gradient(to right top, rgba(16,67,105,1) 0%, rgba(39,75,172,1) 50%, rgba(90,88,101,1) 100%)";
+            break;
+        case weather === "Thunderstorm":
+            main.style.background = "linear-gradient(to right top, rgba(18,15,64,1) 0%, rgba(16,55,152,1) 60%, rgba(177,176,52,1) 100%)";
+            break;
+        case weather === "Drizzle":
+            main.style.background = "linear-gradient(to right top, rgba(19,33,181,1) 0%, rgba(94,190,255,1) 100%)";
+            break;
+        case weather === "Rain":
+            main.style.background = "linear-gradient(to right top, rgba(13, 30, 75, 1) 0%, rgba(31, 149, 181, 1) 100%)";
+            break;
+        case weather === "Snow":
+            main.style.background = "linear-gradient(to right top, rgba(65,73,148,1) 0%, rgba(138,211,255,1) 100%)";
+            break;
+        case weather === "Clear" && date.getHours() >= 6 && date.getHours() < 18:
+            main.style.background = "linear-gradient(to right top, rgba(191,57,13,1) 0%, rgba(251,187,23,1) 80%, rgba(250,247,38,1) 100%)";
+            break;
+        case weather === "Clear" && (date.getHours() >= 18 || date.getHours() < 6):
+            main.style.background = "linear-gradient(to right top, rgba(5,17,74,1) 0%, rgba(8,12,156,1) 60%, rgba(13,6,228,1) 100%)";
+            break;
+        default:
+            main.style.background = getCssValuePrefix() + "linear-gradient(" + "to right top" + ", " + "rgba(13, 30, 75, 1) 0%" + ", " + "rgba(31, 149, 181, 1) 100%" + ")";
+    }
 }
 
 // Error getting api
@@ -235,7 +264,9 @@ function displayResults(weather) {
     const icon = document.querySelector(".bottom__icon-desc__icon");
     playSkycons(icon, weather.weather[0].main, weather.timezone);
 
+    setBg(weather.weather[0].main, weather.timezone);
+
     console.log(weather);
 }
 
-// TODO: bg, readme, responsive, animation?;
+// TODO: autocomplete, readme, responsive;
