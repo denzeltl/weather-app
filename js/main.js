@@ -8,6 +8,7 @@ const coords = {
 };
 let timeout;
 const searchBox = document.querySelector(".search-box");
+const searchBoxSuggestions = document.querySelector(".search-box__suggestions");
 
 // Start time
 function startTime(timezone) {
@@ -139,11 +140,14 @@ function resetSearchBox() {
 function enterKey(e) {
     if (e.keyCode === 13) {
         this.blur();
+        searchBoxSuggestions.innerHTML = "";
     }
 }
 
 // Get api via city name
-function searchCity() {
+function searchCity(li) {
+    const city = String(li);
+    console.log(city);
     fetch(`${api.base}weather?q=${this.value}&units=metric&APPID=${api.key}`)
         .then(weather => {
             return weather.json();
@@ -151,6 +155,9 @@ function searchCity() {
         .then(displayResults)
         .catch(searchError);
 }
+
+// Search for first li on blur
+function searchFirstLi() {}
 
 // Get api via lat long
 function giveLatLong(lat, long) {
@@ -240,14 +247,37 @@ async function detectAutoComplete(e) {
 
     // Match text input
     let matches = cities.filter(city => {
-        const regex = new RegExp(e, "gi");
+        const regex = new RegExp(`^${e}`, "gi");
         return city.name.match(regex);
     });
 
     if (e.length === 0) {
         matches = [];
+        searchBoxSuggestions.innerHTML = "";
     }
-    console.log(matches);
+    displayMatches(matches);
+}
+
+// Display matches to li dom
+function displayMatches(matches) {
+    if (matches.length > 0) {
+        const list = matches
+            .map(
+                match => `
+            <li>${match.name}, ${match.country}</li>
+        `
+            )
+            .slice(0, 10)
+            .join("");
+        searchBoxSuggestions.innerHTML = list;
+
+        const lis = document.querySelectorAll(".search-box__suggestions li");
+        lis.forEach(li => {
+            li.addEventListener("click", function() {
+                searchCity(li);
+            });
+        });
+    }
 }
 
 // Error getting api
@@ -255,6 +285,7 @@ function searchError() {
     searchBox.value = "Sorry, city not found";
     searchBox.style.color = "#f81d1d";
     searchBox.style.borderColor = "#f81d1d";
+    searchBoxSuggestions.innerHTML = "";
 }
 
 // Display results
@@ -277,8 +308,6 @@ function displayResults(weather) {
     playSkycons(icon, weather.weather[0].main, weather.timezone);
 
     setBg(weather.weather[0].main, weather.timezone);
-
-    console.log(weather);
 }
 
 window.addEventListener("load", grantLocationAccess);
@@ -287,6 +316,6 @@ searchBox.addEventListener("keypress", enterKey);
 searchBox.addEventListener("keyup", function() {
     detectAutoComplete(this.value);
 });
-searchBox.addEventListener("blur", searchCity);
+searchBox.addEventListener("blur", searchFirstLi);
 
-// TODO: show autocomplete suggestions, readme, responsive;
+// TODO: autocomplete click on li, readme, responsive;
