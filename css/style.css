@@ -75,6 +75,14 @@ body {
   border-bottom: 1px solid rgba(37, 37, 37, 0.3);
 }
 
+.search-box__suggestions li.no-results {
+  cursor: default;
+}
+
+.search-box__suggestions li.no-results:hover {
+  background: white;
+}
+
 .search-box__suggestions li:last-child {
   border-bottom: none;
 }

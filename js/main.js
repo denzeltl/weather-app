@@ -131,7 +131,6 @@ function grantLocationAccess() {
 
 // When search box is clicked
 function resetSearchBox() {
-    this.value = "";
     this.style.color = "#252525";
     this.style.borderColor = "rgba(255, 255, 255, 0)";
 }
@@ -140,15 +139,13 @@ function resetSearchBox() {
 function enterKey(e) {
     if (e.keyCode === 13) {
         this.blur();
-        searchBoxSuggestions.innerHTML = "";
     }
 }
 
 // Get api via city name
 function searchCity(li) {
-    const city = String(li);
-    console.log(city);
-    fetch(`${api.base}weather?q=${this.value}&units=metric&APPID=${api.key}`)
+    const city = li.innerText;
+    fetch(`${api.base}weather?q=${city}&units=metric&APPID=${api.key}`)
         .then(weather => {
             return weather.json();
         })
@@ -157,7 +154,7 @@ function searchCity(li) {
 }
 
 // Search for first li on blur
-function searchFirstLi() {}
+function hideSuggestions() {}
 
 // Get api via lat long
 function giveLatLong(lat, long) {
@@ -251,11 +248,16 @@ async function detectAutoComplete(e) {
         return city.name.match(regex);
     });
 
+    if (matches[0] === undefined) {
+        searchBoxSuggestions.innerHTML = "<li class='no-results'>No results</li>";
+    } else {
+        displayMatches(matches);
+    }
+
     if (e.length === 0) {
         matches = [];
         searchBoxSuggestions.innerHTML = "";
     }
-    displayMatches(matches);
 }
 
 // Display matches to li dom
@@ -267,13 +269,15 @@ function displayMatches(matches) {
             <li>${match.name}, ${match.country}</li>
         `
             )
-            .slice(0, 10)
+            .slice(0, 50)
+            .sort()
             .join("");
         searchBoxSuggestions.innerHTML = list;
 
         const lis = document.querySelectorAll(".search-box__suggestions li");
         lis.forEach(li => {
             li.addEventListener("click", function() {
+                searchBoxSuggestions.innerHTML = "";
                 searchCity(li);
             });
         });
@@ -282,7 +286,8 @@ function displayMatches(matches) {
 
 // Error getting api
 function searchError() {
-    searchBox.value = "Sorry, city not found";
+    searchBox.value = "";
+    searchBox.placeholder = "Sorry, city not found";
     searchBox.style.color = "#f81d1d";
     searchBox.style.borderColor = "#f81d1d";
     searchBoxSuggestions.innerHTML = "";
@@ -316,6 +321,6 @@ searchBox.addEventListener("keypress", enterKey);
 searchBox.addEventListener("keyup", function() {
     detectAutoComplete(this.value);
 });
-searchBox.addEventListener("blur", searchFirstLi);
+searchBox.addEventListener("blur", hideSuggestions);
 
-// TODO: autocomplete click on li, readme, responsive;
+// TODO: searchbox on enter first city, blur function,  readme, responsive;

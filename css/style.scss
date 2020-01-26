@@ -56,6 +56,12 @@ body {
             cursor: pointer;
             padding: 0.7rem 1.4rem;
             border-bottom: 1px solid rgba(37, 37, 37, 0.3);
+            &.no-results {
+                cursor: default;
+                &:hover {
+                    background: rgb(255, 255, 255);
+                }
+            }
             &:last-child {
                 border-bottom: none;
             }
