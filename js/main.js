@@ -324,4 +324,4 @@ searchBox.addEventListener("keyup", function() {
     detectAutoComplete(this.value);
 });
 
-// TODO:  readme, responsive;
+// TODO:  readme

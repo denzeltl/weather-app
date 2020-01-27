@@ -165,4 +165,72 @@ body {
   font-size: 2rem;
   margin-left: 0.5rem;
 }
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  .main {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding: 0 2rem;
+  }
+  .search-box {
+    width: 100%;
+  }
+  .search-box__container {
+    width: 100%;
+  }
+  .search-box__suggestions {
+    width: 100%;
+  }
+  .top {
+    width: 100%;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .top__timezone {
+    margin-bottom: 2rem;
+  }
+  .top__time {
+    margin: 0 auto;
+    font-size: 2rem;
+  }
+  .date {
+    margin-bottom: 2rem;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+  .bottom {
+    width: 100%;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .bottom__icon-desc__icon {
+    width: 6rem;
+    margin-bottom: 0.5rem;
+  }
+  .bottom__icon-desc__description {
+    margin-bottom: 1rem;
+  }
+}
 /*# sourceMappingURL=style.css.map */
