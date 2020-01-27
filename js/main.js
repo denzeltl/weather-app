@@ -138,6 +138,10 @@ function resetSearchBox() {
 // Enter key on search box
 function enterKey(e) {
     if (e.keyCode === 13) {
+        const firstCity = searchBoxSuggestions.firstElementChild;
+        searchCity(firstCity);
+        searchBoxSuggestions.innerHTML = "";
+        searchBox.value = firstCity.innerText;
         this.blur();
     }
 }
@@ -152,9 +156,6 @@ function searchCity(li) {
         .then(displayResults)
         .catch(searchError);
 }
-
-// Search for first li on blur
-function hideSuggestions() {}
 
 // Get api via lat long
 function giveLatLong(lat, long) {
@@ -278,6 +279,7 @@ function displayMatches(matches) {
         lis.forEach(li => {
             li.addEventListener("click", function() {
                 searchBoxSuggestions.innerHTML = "";
+                searchBox.value = this.innerText;
                 searchCity(li);
             });
         });
@@ -321,6 +323,5 @@ searchBox.addEventListener("keypress", enterKey);
 searchBox.addEventListener("keyup", function() {
     detectAutoComplete(this.value);
 });
-searchBox.addEventListener("blur", hideSuggestions);
 
-// TODO: searchbox on enter first city, blur function,  readme, responsive;
+// TODO:  readme, responsive;
