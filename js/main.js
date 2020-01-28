@@ -240,7 +240,7 @@ function setBg(weather, timezone) {
 
 // Detect autocomplete
 async function detectAutoComplete(e) {
-    const response = await fetch("weather-app/data/city.list.json");
+    const response = await fetch("/data/city.list.json");
     const cities = await response.json();
     console.log(e);
     // Match text input
