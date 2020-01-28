@@ -240,7 +240,7 @@ function setBg(weather, timezone) {
 
 // Detect autocomplete
 async function detectAutoComplete(e) {
-    const response = await fetch("../data/city.list.json");
+    const response = await fetch("/data/city.list.json");
     const cities = await response.json();
     console.log(e);
     // Match text input
@@ -320,7 +320,7 @@ function displayResults(weather) {
 window.addEventListener("load", grantLocationAccess);
 searchBox.addEventListener("click", resetSearchBox);
 searchBox.addEventListener("keydown", enterKey);
-searchBox.addEventListener("input", function() {
+searchBox.addEventListener("keyup", function() {
     detectAutoComplete(this.value);
 });
 
