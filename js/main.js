@@ -320,7 +320,7 @@ function displayResults(weather) {
 window.addEventListener("load", grantLocationAccess);
 searchBox.addEventListener("click", resetSearchBox);
 searchBox.addEventListener("keydown", enterKey);
-searchBox.addEventListener("keydown", function() {
+searchBox.addEventListener("input", function() {
     detectAutoComplete(this.value);
 });
 
