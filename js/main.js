@@ -323,5 +323,3 @@ searchBox.addEventListener("keydown", enterKey);
 searchBox.addEventListener("keyup", function() {
     detectAutoComplete(this.value);
 });
-
-// TODO:  readme
