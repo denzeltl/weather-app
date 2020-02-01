@@ -8,10 +8,11 @@ View [here](https://denzeltl.github.io/weather-app/)
 
 **Built with:** _JavaScript (ES6+), SCSS_
 
-**Completed on:** _01/18/2020_
+**Completed on:** _01/29/2020_
 
 ---
 
 ## Things Learned:
 
--
+-   Fetch api from a live server
+-   Get properties of JSON data
